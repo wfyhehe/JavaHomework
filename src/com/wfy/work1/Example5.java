@@ -6,7 +6,7 @@ public class Example5 {
 
     public static ArrayList<Integer> getPrimesLessThan(int number) {
         ArrayList<Integer> primes = new ArrayList<>();
-        if (number < 3) {
+        if (number < 2) {
             return primes;
         }
         primes.add(2);
@@ -15,7 +15,7 @@ public class Example5 {
                 int prime = primes.get(j);
                 if (i % prime == 0) {
                     break;
-                } else if (prime * 2 > i) {
+                } else if (prime * prime > i) {
                     primes.add(i);
                     break;
                 }
@@ -25,6 +25,8 @@ public class Example5 {
     }
 
     public static void main(String[] args) {
+        int[] a = new int[1];
+        System.out.println(a[2]);
         System.out.println(getPrimesLessThan(100));
     }
 }
