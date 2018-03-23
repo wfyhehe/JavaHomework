@@ -1,4 +1,4 @@
-package com.wfy.work2;
+package com.wfy.work2.string;
 
 import java.util.Scanner;
 
