@@ -1,11 +1,18 @@
 package com.wfy.horse;
 
+import edu.princeton.cs.algs4.StdDraw;
+
+import java.awt.*;
 import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Stack;
 
 public class HorseTraversal {
+    private static final Color backgroundColor = Color.LIGHT_GRAY;
+    private static final Color gridColor = Color.DARK_GRAY;
+    private static final Color routeColor = Color.BLACK;
+    private static final Color horseColor = Color.RED;
     private static int[][] diffEntries = new int[][]{
             {1, 2},
             {2, 1},
@@ -16,9 +23,8 @@ public class HorseTraversal {
             {-2, 1},
             {-1, 2},
     };
-
     private int size;
-    private boolean flag = false;
+    private boolean succeeded = false;
     private boolean[][] board;
     private int traversedCount = 0;
     private Stack<Map.Entry<Integer, Integer>> path;
@@ -39,18 +45,26 @@ public class HorseTraversal {
         this.showPathOrNot = showPathOrNot;
     }
 
+    public static void main(String[] args) {
+//        for (int i = 4; i < 20; i++) {
+//            // 4x 5x 6√ 7? 8√ 9? 10√ 11? 12√ 13? 14√ 15? 16? 17? 18√ 19?
+//            new HorseThread(i, true).start();
+//        }
+        new HorseThread(14, true).start();
+    }
+
     public boolean canTraverse() {
         jump(startX, startY);
-        return flag;
+        return succeeded;
     }
 
     private void jump(int i, int j) {
-        if (flag) {
+        if (succeeded) {
             return;
         }
         if (i == startX & j == startY && traversedCount == size * size) {
-            flag = true;
-            if(this.showPathOrNot) {
+            succeeded = true;
+            if (this.showPathOrNot) {
                 showPath();
             }
             return;
@@ -59,29 +73,29 @@ public class HorseTraversal {
             return;
         }
         int[][] diffEntriesCopy = diffEntries.clone();
-        Arrays.sort(diffEntriesCopy, (o1, o2) -> {
+        Arrays.sort(diffEntriesCopy, (o1, o2) -> { // 可以选择的两个点，o1[0]表示x，o1[1]表示y
             if (!inBoard(i + o2[0], j + o2[1]) || board[i + o2[0]][j + o2[1]]) {
-                return -1;
+                return -1; // 优先把OutOfBounds的选择排除掉
             }
             if (!inBoard(i + o1[0], j + o1[1]) || board[i + o1[0]][j + o1[1]]) {
-                return 1;
+                return 1; // 优先把OutOfBounds的选择排除掉
             }
             int choices1 = 0;
             int choices2 = 0;
-            for (int[] entry : diffEntries) {
-                int o1I = i + o1[0] + entry[0];
-                int o1J = j + o1[1] + entry[1];
-                int o2I = i + o2[0] + entry[0];
+            for (int[] entry : diffEntries) { // 对于o1, o2，他们又有8个不同的选择，遍历每一个选择
+                int o1I = i + o1[0] + entry[0]; // o1->next的i(x)坐标
+                int o1J = j + o1[1] + entry[1]; // o1->next的j(y)坐标
+                int o2I = i + o2[0] + entry[0]; // ...
                 int o2J = j + o2[1] + entry[1];
-                if ((inBoard(o1I, o1J) && !board[o1I][o1J])) choices1++;
+                if ((inBoard(o1I, o1J) && !board[o1I][o1J])) choices1++; // 对o1的下一个可走位置计数
                 if ((inBoard(o2I, o2J) && !board[o2I][o2J])) choices2++;
             }
-            if (choices1 != choices2) return choices1 - choices2;
-            int distanceFromCenter1 = Math.abs(o1[0] - size / 2) +
+            if (choices1 != choices2) return choices1 - choices2; // 优先选择可走位置数量少的
+            int distanceFromCenter1 = Math.abs(o1[0] - size / 2) + // 如果可走位置数相等，比较他们距中心的距离
                     Math.abs(o1[1] - size / 2);
             int distanceFromCenter2 = Math.abs(o2[0] - size / 2) +
                     Math.abs(o2[1] - size / 2);
-            return distanceFromCenter2 - distanceFromCenter1;
+            return distanceFromCenter2 - distanceFromCenter1; // 选择离中心最远的位置前进
         });
         for (int[] entry : diffEntriesCopy) {
             board[i][j] = true;
@@ -99,9 +113,34 @@ public class HorseTraversal {
     }
 
     private void showPath() {
-        for (Map.Entry<Integer, Integer> pathEntry : path) {
-            System.out.printf("(%d, %d)\n", pathEntry.getKey(), pathEntry.getValue());
+        StdDraw.setXscale(0, size + 1);
+        StdDraw.setYscale(0, size + 1);
+        StdDraw.setPenColor(backgroundColor);
+        StdDraw.filledRectangle(1, 1, size, size);
+        StdDraw.setPenColor(gridColor);
+        for (int i = 1; i <= size; i++) {
+            StdDraw.line(i, 1, i, size);
+            StdDraw.line(1, i, size, i);
         }
+        StdDraw.setPenColor(horseColor);
+        StdDraw.filledCircle(startX + 1, startY + 1, 0.1);
+        StdDraw.setPenColor(routeColor);
+        Integer prevX = startX + 1;
+        Integer prevY = startY + 1;
+        for (Map.Entry<Integer, Integer> pathEntry : path) {
+            Integer x = pathEntry.getKey() + 1;
+            Integer y = pathEntry.getValue() + 1;
+            StdDraw.line(prevX, prevY, x, y);
+            System.out.printf("(%d, %d)\n", x, y);
+            prevX = x;
+            prevY = y;
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        StdDraw.line(prevX, prevY, startX + 1, startY + 1);
     }
 
 }
