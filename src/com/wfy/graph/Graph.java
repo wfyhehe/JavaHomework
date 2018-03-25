@@ -10,6 +10,7 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
     public static final Color defaultColor = Color.LIGHT_GRAY;
     public static final Color visitedColor = Color.BLACK;
     public static final Color currentColor = Color.RED;
+
     private List<Vertex<TV>> vertexes;
     private List<List<Edge<TE>>> edges;
     private int edgeCount = 0;
@@ -54,7 +55,7 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
         System.out.println("DFS:");
         for (Iterator it = g.dfsIterator(); it.hasNext(); ) {
             Vertex v = (Vertex) it.next();
-            DrawUtil.drawWhileRunning(v, prevV, 2000);
+            DrawUtil.drawWhileRunning(v, prevV, 500);
             System.out.println(v);
             prevV = v;
         }
@@ -149,7 +150,6 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
 
     public void addOrUpdateEdge(int i, int j) {
         addOrUpdateEdge(i, j, null, 1);
-
     }
 
     public void addOrUpdateDualEdge(int i, int j, TE edge, int weight) {
@@ -177,7 +177,7 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
     public int nextNeighbour(int i, int j) {
         j--;
         try {
-            while (j > -1 && !exists(i, j)) {
+            while (j > -1 && !edgeExists(i, j)) {
                 j--;
             }
         } catch (IndexOutOfBoundsException e) {
@@ -185,7 +185,7 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
         return j;
     }
 
-    public boolean exists(int i, int j) {
+    public boolean edgeExists(int i, int j) {
         rangeCheck(i, j);
         Edge<TE> edge = edges.get(i).get(j);
         return edge != null;
@@ -206,7 +206,7 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
 
     public Edge remove(int i, int j) {
         rangeCheck(i, j);
-        if (!exists(i, j)) return null;
+        if (!edgeExists(i, j)) return null;
         Edge ret = edges.get(i).get(j);
         edges.get(i).set(j, null);
         edgeCount--;
@@ -306,8 +306,6 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
             } else {
                 Thread.sleep(interval);
             }
-            System.out.println(v);
-            prevV = v;
         }
 
         private static void initDraw(Graph graph) {

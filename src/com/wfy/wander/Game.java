@@ -28,13 +28,16 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        int size = 30;
+        int size = 50;
         StdDraw.setXscale(0, size - 1);
         StdDraw.setYscale(0, size - 1);
         StdDraw.setPenColor(backgroundColor);
         StdDraw.filledRectangle(1, 1, size, size);
         StdDraw.setPenColor(lineColor);
-        new Game(new City(size), 100).run();
+        long startTime = System.currentTimeMillis();
+        new Game(new City(size), 10).run();
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time elapsed: " + (endTime - startTime) + "ms");
     }
 
     private void run() {
