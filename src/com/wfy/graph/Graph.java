@@ -55,7 +55,7 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
         System.out.println("DFS:");
         for (Iterator it = g.dfsIterator(); it.hasNext(); ) {
             Vertex v = (Vertex) it.next();
-            DrawUtil.drawWhileRunning(v, prevV, 500);
+//            DrawUtil.drawWhileRunning(v, prevV, 500);
             System.out.println(v);
             prevV = v;
         }
@@ -127,7 +127,7 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
                 }
             }
         }
-        DrawUtil.initDraw(this);
+//        DrawUtil.initDraw(this);
     }
 
     public void addOrUpdateEdge(int i, int j, TE edge, int weight) {
@@ -293,16 +293,16 @@ public class Graph<TV, TE> implements Iterable<Graph.Vertex<TV>> {
             int col = (int) v.getData() % 3;
             int x = col * 30 + 10;
             int y = row * 25 + 10;
-            DrawUtil.drawCircleAndText(x, y, String.valueOf(v.data), currentColor);
+//            DrawUtil.drawCircleAndText(x, y, String.valueOf(v.data), currentColor);
             if (prevV != null) {
                 row = (int) prevV.getData() / 3;
                 col = (int) prevV.getData() % 3;
                 int prevX = col * 30 + 10;
                 int prevY = row * 25 + 10;
-                DrawUtil.drawCircleAndText(prevX, prevY, String.valueOf(prevV.data), visitedColor);
-                DrawUtil.drawLine(prevX, prevY, x, y, currentColor);
-                Thread.sleep(interval);
-                DrawUtil.drawLine(prevX, prevY, x, y, visitedColor);
+//                DrawUtil.drawCircleAndText(prevX, prevY, String.valueOf(prevV.data), visitedColor);
+//                DrawUtil.drawLine(prevX, prevY, x, y, currentColor);
+//                Thread.sleep(interval);
+//                DrawUtil.drawLine(prevX, prevY, x, y, visitedColor);
             } else {
                 Thread.sleep(interval);
             }

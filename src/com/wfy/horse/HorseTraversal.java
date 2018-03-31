@@ -23,7 +23,8 @@ public class HorseTraversal {
             {-2, 1},
             {-1, 2},
     };
-    private int size;
+    private int rows;
+    private int cols;
     private boolean succeeded = false;
     private boolean[][] board;
     private int traversedCount = 0;
@@ -32,25 +33,26 @@ public class HorseTraversal {
     private int startY = 0;
     private boolean showPathOrNot = false;
 
-    public HorseTraversal(int size) {
-        this.size = size;
-        board = new boolean[size][size];
+    public HorseTraversal(int col, int row) {
+        this.cols = col;
+        this.rows = row;
+        board = new boolean[row][col];
         path = new Stack<>();
-        startX = size / 2;
-        startY = size / 2;
+        startX = row / 2;
+        startY = col / 2;
     }
 
-    public HorseTraversal(int size, boolean showPathOrNot) {
-        this(size);
+    public HorseTraversal(int col, int row, boolean showPathOrNot) {
+        this(col, row);
         this.showPathOrNot = showPathOrNot;
     }
 
     public static void main(String[] args) {
-//        for (int i = 4; i < 20; i++) {
-//            // 4x 5x 6√ 7? 8√ 9? 10√ 11? 12√ 13? 14√ 15? 16? 17? 18√ 19?
-//            new HorseThread(i, true).start();
-//        }
-        new HorseThread(14, true).start();
+        for (int i = 4; i < 20; i++) {
+            // 4x 5x 6√ 7? 8√ 9? 10√ 11? 12√ 13? 14√ 15? 16? 17? 18√ 19?
+            new HorseThread(i, i).start();
+        }
+//        new HorseThread(10, 11, true).start();
     }
 
     public boolean canTraverse() {
@@ -62,7 +64,7 @@ public class HorseTraversal {
         if (succeeded) {
             return;
         }
-        if (i == startX & j == startY && traversedCount == size * size) {
+        if (i == startX & j == startY && traversedCount == rows * cols) {
             succeeded = true;
             if (this.showPathOrNot) {
                 showPath();
@@ -91,10 +93,10 @@ public class HorseTraversal {
                 if ((inBoard(o2I, o2J) && !board[o2I][o2J])) choices2++;
             }
             if (choices1 != choices2) return choices1 - choices2; // 优先选择可走位置数量少的
-            int distanceFromCenter1 = Math.abs(o1[0] - size / 2) + // 如果可走位置数相等，比较他们距中心的距离
-                    Math.abs(o1[1] - size / 2);
-            int distanceFromCenter2 = Math.abs(o2[0] - size / 2) +
-                    Math.abs(o2[1] - size / 2);
+            int distanceFromCenter1 = Math.abs(o1[0] - rows / 2) + // 如果可走位置数相等，比较他们距中心的距离
+                    Math.abs(o1[1] - cols / 2);
+            int distanceFromCenter2 = Math.abs(o2[0] - rows / 2) +
+                    Math.abs(o2[1] - cols / 2);
             return distanceFromCenter2 - distanceFromCenter1; // 选择离中心最远的位置前进
         });
         for (int[] entry : diffEntriesCopy) {
@@ -109,18 +111,20 @@ public class HorseTraversal {
     }
 
     private boolean inBoard(int i, int j) {
-        return i >= 0 && j >= 0 && i < size && j < size;
+        return i >= 0 && j >= 0 && i < rows && j < cols;
     }
 
     private void showPath() {
-        StdDraw.setXscale(0, size + 1);
-        StdDraw.setYscale(0, size + 1);
+        StdDraw.setXscale(0, rows + 1);
+        StdDraw.setYscale(0, cols + 1);
         StdDraw.setPenColor(backgroundColor);
-        StdDraw.filledRectangle(1, 1, size, size);
+        StdDraw.filledRectangle(1, 1, rows, cols);
         StdDraw.setPenColor(gridColor);
-        for (int i = 1; i <= size; i++) {
-            StdDraw.line(i, 1, i, size);
-            StdDraw.line(1, i, size, i);
+        for (int i = 1; i <= rows; i++) {
+            StdDraw.line(i, 1, i, cols);
+        }
+        for (int i = 1; i <= cols; i++) {
+            StdDraw.line(1, i, rows, i);
         }
         StdDraw.setPenColor(horseColor);
         StdDraw.filledCircle(startX + 1, startY + 1, 0.1);
