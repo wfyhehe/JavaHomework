@@ -65,6 +65,7 @@ public class Game {
                 }
             }
         }
+        System.out.println("Size:" + city.getSize());
         System.out.println("Succeeded: " + success);
         System.out.println("Failed: " + failed);
         System.out.println("Success rate: " + (double) success / maxRetry);
