@@ -11,10 +11,10 @@ public class Calculator extends Applet {
     private String ForeScreen, BackScreen;
 
     public void init() {
-        OperatorCurrent = new String("");
-        OperatorPre = new String("");
-        ForeScreen = new String("0");
-        BackScreen = new String("");
+        OperatorCurrent = "";
+        OperatorPre = "";
+        ForeScreen = "0";
+        BackScreen = "";
         setLayout(null);
         tfAnswer = new TextField();
         tfAnswer.setBounds(20, 20, 175, 40);
@@ -84,7 +84,7 @@ public class Calculator extends Applet {
     }
 
     public boolean action(Event e, Object o) {
-        String s = new String("");
+        String s;
         if ((e.target == b0) || (e.target == b1) || (e.target == b2)
                 || (e.target == b3) || (e.target == b4) || (e.target == b5)
                 || (e.target == b6) || (e.target == b7) || (e.target == b8)
