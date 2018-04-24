@@ -1,14 +1,14 @@
 package com.wfy.work3.e16.control;
 
-import model.Actions;
-import model.People;
+
+import com.wfy.work3.e16.model.Actions;
+import com.wfy.work3.e16.model.People;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 public class Main extends JFrame {
 
@@ -326,7 +326,7 @@ public class Main extends JFrame {
     }
 
     public void update() {//Update the contacts according to MySQL DataBase;
-        List<People> list;
+        java.util.List<People> list;
         try {
 
             list = actions.query();
