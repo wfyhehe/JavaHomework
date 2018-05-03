@@ -11,26 +11,30 @@ public class TextEditor extends JFrame implements ActionListener {
     String fileName = "";
     JTextArea wen = new JTextArea(20, 50);
 
-    JMenuItem ziti = new JMenuItem("字体");
-    JMenuItem a = new JMenuItem("普通");
-    //定义菜单项  
-    JMenuItem xin = new JMenuItem("新建");
+    JMenuItem font = new JMenuItem("字体");
+    JMenuItem color = new JMenuItem("颜色");
+    //定义菜单项
+    JMenuItem newFile = new JMenuItem("新建");
     JMenuItem open = new JMenuItem("打开");
     JMenuItem save = new JMenuItem("保存 ");
-    JMenuItem lsave = new JMenuItem("另存为");
-    JMenuItem tui = new JMenuItem("退出");
+    JMenuItem saveAs = new JMenuItem("另存为");
+    JMenuItem exit = new JMenuItem("退出");
 
     JMenuItem cut = new JMenuItem("剪切 ");
     JMenuItem copy = new JMenuItem("复制");
     JMenuItem cast = new JMenuItem("粘贴");
     JMenuItem delete = new JMenuItem("删除 ");
 
-    JMenuItem b = new JMenuItem("粗体");
-    JMenuItem c = new JMenuItem("斜体");
+    JMenuItem normal = new JMenuItem("普通");
+    JMenuItem bold = new JMenuItem("粗体");
+    JMenuItem italic = new JMenuItem("斜体");
+
+    JMenuItem black = new JMenuItem("黑色");
+    JMenuItem red = new JMenuItem("红色");
+    JMenuItem blue = new JMenuItem("蓝色");
 
     TextEditor() {
         super("文本编辑器");
-        //小小对话框  
         setBounds(250, 100, 700, 450);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -47,7 +51,7 @@ public class TextEditor extends JFrame implements ActionListener {
             }
         });
         //热键设置  
-        xin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
+        newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
         open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         cut.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
@@ -59,38 +63,55 @@ public class TextEditor extends JFrame implements ActionListener {
         wen.setFont(new Font("楷体", Font.PLAIN, 20));
 
         //菜单栏的创建  
-        JMenuBar cai = new JMenuBar();
-        this.setJMenuBar(cai);
-        cai.setOpaque(true);
-        JMenu jian = new JMenu("文件");
-        jian.add(xin);
-        jian.add(open);
-        jian.add(save);
-        jian.add(lsave);
-        jian.addSeparator();
-        jian.add(tui);
-        cai.add(jian);
-        JMenu bian = new JMenu("编辑");
-        bian.add(cut);
-        bian.add(copy);
-        bian.add(cast);
-        bian.add(delete);
-        cai.add(bian);
+        JMenuBar menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar);
+        menuBar.setOpaque(true);
+        JMenu fileMenu = new JMenu("文件");
+        fileMenu.add(newFile);
+        fileMenu.add(open);
+        fileMenu.add(save);
+        fileMenu.add(saveAs);
+        fileMenu.addSeparator();
+        fileMenu.add(exit);
+        menuBar.add(fileMenu);
+        JMenu editMenu = new JMenu("编辑");
+        editMenu.add(cut);
+        editMenu.add(copy);
+        editMenu.add(cast);
+        editMenu.add(delete);
+        menuBar.add(editMenu);
+
+        JMenu format = new JMenu("格式");
+        JMenu optionsMenu = new JMenu("字体");
+        JMenu colorOptionsMenu = new JMenu("颜色");
+        format.add(optionsMenu);
+        format.add(colorOptionsMenu);
+        optionsMenu.add(normal);
+        optionsMenu.add(bold);
+        optionsMenu.add(italic);
+        colorOptionsMenu.add(black);
+        colorOptionsMenu.add(red);
+        colorOptionsMenu.add(blue);
+        menuBar.add(format);
 
         //增加监听器
-        xin.addActionListener(this);
+        newFile.addActionListener(this);
         open.addActionListener(this);
         save.addActionListener(this);
-        lsave.addActionListener(this);
-        tui.addActionListener(this);
+        saveAs.addActionListener(this);
+        exit.addActionListener(this);
         cut.addActionListener(this);
         copy.addActionListener(this);
         cast.addActionListener(this);
         delete.addActionListener(this);
-        ziti.addActionListener(this);
-        a.addActionListener(this);
-        b.addActionListener(this);
-        c.addActionListener(this);
+        font.addActionListener(this);
+        color.addActionListener(this);
+        normal.addActionListener(this);
+        bold.addActionListener(this);
+        italic.addActionListener(this);
+        black.addActionListener(this);
+        blue.addActionListener(this);
+        red.addActionListener(this);
     }
 
     public static void main(String[] args) {
@@ -102,13 +123,13 @@ public class TextEditor extends JFrame implements ActionListener {
     //重写方法
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if (e.getSource() == xin) {
+        if (e.getSource() == newFile) {
             newfile();
         } else if (e.getSource() == open) {
             openfile();
         } else if (e.getSource() == save) {
             savefile();
-        } else if (e.getSource() == lsave) {
+        } else if (e.getSource() == saveAs) {
             lsavefile();
         } else if (e.getSource() == cut) {
             cutfile();
@@ -118,6 +139,12 @@ public class TextEditor extends JFrame implements ActionListener {
             castfile();
         } else if (e.getSource() == delete) {
             deletefile();
+        } else if (e.getSource() == normal) {
+            afile();
+        } else if (e.getSource() == bold) {
+            bfile();
+        } else if (e.getSource() == italic) {
+            cfile();
         } else if ("退出".equals(actionCommand)) {
             System.exit(0);
         }
@@ -253,5 +280,19 @@ public class TextEditor extends JFrame implements ActionListener {
         int len = wen.getSelectedText().length();
         tmp.delete(start, start + len);
         wen.setText(tmp.toString());
+    }
+
+    //字体
+    public void afile() {
+        wen.setFont(new Font("楷体", Font.PLAIN, wen.getFont().getSize()));//普通文字
+    }
+
+    public void bfile() {
+        wen.setFont(new Font("楷体", Font.BOLD, wen.getFont().getSize()));//粗体文字
+
+    }
+
+    public void cfile() {
+        wen.setFont(new Font("楷体", Font.ITALIC, wen.getFont().getSize()));//斜体文字
     }
 }
