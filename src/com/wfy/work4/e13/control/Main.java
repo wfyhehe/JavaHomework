@@ -28,7 +28,7 @@ public class Main extends JFrame {
 
     public Main() {
         setResizable(false);
-        setTitle("通讯录");
+        setTitle("地址簿");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 300);
         contentPane = new JPanel();

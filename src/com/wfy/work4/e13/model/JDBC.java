@@ -16,7 +16,6 @@ public class JDBC {
 
     public static Connection getConnection() {
         try {
-
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
 
@@ -27,22 +26,5 @@ public class JDBC {
             JOptionPane.showMessageDialog(null, "Connection failed!");
         }
         return connection;
-    }
-
-    public static void print(List<People> list) {
-        for (People people : list) {
-            System.out.print("Id:" + people.getId() + "\t");
-            System.out.print("name:" + people.getName() + "\t");
-            System.out.println();
-        }
-    }
-
-    public static void print(People people) {
-        System.out.print("Id:" + people.getId() + "\t");
-        System.out.print("name:" + people.getName() + "\t");
-        System.out.print("sex:" + people.getSex() + "\t");
-        System.out.print("number:" + people.getNumber() + "\t");
-        System.out.print("email:" + people.getEmail() + "\t");
-        System.out.print("address:" + people.getAddress() + "\t");
     }
 }
