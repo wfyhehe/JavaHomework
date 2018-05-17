@@ -53,12 +53,10 @@ public class Main extends JFrame {
                 if (queriedPeople != null) {
                     JOptionPane.showMessageDialog(null, "The input name already exists!");
                 } else {
-
                     actions.add(people);
                     update();
                     JOptionPane.showMessageDialog(null, "Add successfully!");
                 }
-
             } catch (Exception e1) {
                 JOptionPane.showMessageDialog(null, "Duplicate entry " + txtID.getText() + " for key 'PRIMARY'");
             }
@@ -75,11 +73,9 @@ public class Main extends JFrame {
                     txtAddress.getText()
             );
             try {
-
                 actions.update(people, i);
                 update();
                 JOptionPane.showMessageDialog(null, "Update successfully!");
-
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -93,7 +89,6 @@ public class Main extends JFrame {
                     update();
                     JOptionPane.showMessageDialog(null, "Delete successfully!");
                 }
-
             } catch (NumberFormatException e1) {
                 e1.printStackTrace();
             } catch (Exception e1) {
@@ -110,7 +105,6 @@ public class Main extends JFrame {
                 txtAddress.setText(people.getAddress());
                 txtSex.setText(people.getSex());
                 txtID.setText(people.getId() + "");
-
             } catch (Exception e1) {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Query failed!");
@@ -187,7 +181,6 @@ public class Main extends JFrame {
                         txtAddress.getText()
                 );
                 try {
-
                     actions.update(people, i);
                     update();
                     JOptionPane.showMessageDialog(null, "Update successfully!");
@@ -211,7 +204,6 @@ public class Main extends JFrame {
                         update();
                         JOptionPane.showMessageDialog(null, "Delete successfully!");
                     }
-
                 } catch (NumberFormatException e1) {
                     e1.printStackTrace();
                 } catch (Exception e1) {
@@ -227,7 +219,6 @@ public class Main extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-
                     People people = actions.queryString(comboBox.getSelectedItem().toString());
                     txtName.setText(people.getName());
                     txtEmail.setText(people.getEmail());
@@ -235,7 +226,6 @@ public class Main extends JFrame {
                     txtAddress.setText(people.getAddress());
                     txtSex.setText(people.getSex());
                     txtID.setText(people.getId() + "");
-
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Query failed!");
@@ -262,7 +252,6 @@ public class Main extends JFrame {
                     if (queriedPeople != null) {
                         JOptionPane.showMessageDialog(null, "The input name already exists!");
                     } else {
-
                         actions.add(people);
                         update();
                         JOptionPane.showMessageDialog(null, "Add successfully!");
@@ -306,10 +295,8 @@ public class Main extends JFrame {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-
                 Main frame = new Main();
                 frame.setVisible(true);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -328,7 +315,6 @@ public class Main extends JFrame {
     public void update() {//Update the contacts according to MySQL DataBase;
         java.util.List<People> list;
         try {
-
             list = actions.query();
             String[] strings = new String[list.size()];
             int i = 0;
@@ -337,7 +323,6 @@ public class Main extends JFrame {
             }
             comboBox.setModel(new DefaultComboBoxModel<>(strings));
             clear();
-
         } catch (Exception e) {
         }
         contentPane.add(comboBox);

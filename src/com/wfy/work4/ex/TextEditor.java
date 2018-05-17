@@ -46,7 +46,6 @@ public class TextEditor extends JFrame implements ActionListener {
                         System.exit(0);
                     } else {
                         return;
-
                     }
             }
         });
@@ -289,7 +288,6 @@ public class TextEditor extends JFrame implements ActionListener {
 
     public void bfile() {
         wen.setFont(new Font("楷体", Font.BOLD, wen.getFont().getSize()));//粗体文字
-
     }
 
     public void cfile() {

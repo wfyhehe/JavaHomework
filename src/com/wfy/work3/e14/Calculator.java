@@ -81,6 +81,9 @@ public class Calculator extends Applet {
         bPoint = new Button(".");
         bPoint.setBounds(110, 250, 40, 40);
         add(bPoint);
+
+        Label label1 = new Label("2333");
+
     }
 
     public boolean action(Event e, Object o) {
@@ -181,7 +184,5 @@ public class Calculator extends Applet {
         BackScreen = "";
         tfAnswer.setText(ForeScreen);
         repaint();
-
     }
-
 }
